@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-slate-100 font-sans antialiased;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(12,141,228,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(12,141,228,0.03) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-50;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface-50 border border-white/5 rounded-2xl;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-200 hover:border-white/10 hover:shadow-card;
+  }
+
+  .btn-primary {
+    @apply bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white font-medium
+           rounded-xl px-4 py-2.5 transition-all duration-150 active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-100 hover:bg-surface-200 text-slate-200 font-medium
+           border border-white/10 rounded-xl px-4 py-2.5 transition-all duration-150
+           active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-white/5 text-slate-400 hover:text-slate-200
+           rounded-xl px-3 py-2 transition-all duration-150;
+  }
+
+  .btn-danger {
+    @apply bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300
+           border border-red-500/20 rounded-xl px-4 py-2.5 transition-all duration-150;
+  }
+
+  .input {
+    @apply bg-surface-100 border border-white/10 text-slate-100 placeholder-slate-500
+           rounded-xl px-4 py-2.5 w-full transition-all duration-150 outline-none
+           focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/30
+           hover:border-white/20;
+  }
+
+  .label {
+    @apply text-sm font-medium text-slate-400 mb-1.5 block;
+  }
+
+  .badge-income {
+    @apply inline-flex items-center gap-1 text-xs font-medium
+           bg-emerald-500/10 text-emerald-400 border border-emerald-500/20
+           rounded-full px-2.5 py-0.5;
+  }
+
+  .badge-expense {
+    @apply inline-flex items-center gap-1 text-xs font-medium
+           bg-red-500/10 text-red-400 border border-red-500/20
+           rounded-full px-2.5 py-0.5;
+  }
+
+  .stat-card {
+    @apply card p-5 flex flex-col gap-3;
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 25%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.03) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.10s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.20s; }
+  .stagger-5 { animation-delay: 0.25s; }
+  .stagger-6 { animation-delay: 0.30s; }
+}
