@@ -9,7 +9,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38BDF8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com)
 
-**[🌐 Ver aplicação ao vivo](fintrack-web-rosy.vercel.app)** •
+**[🌐 Ver aplicação ao vivo](https://fintrack-web-rosy.vercel.app/)** •
 **[⚙️ Repositório Backend](https://github.com/LucasViana130/Fintrack)** •
 **[📖 Documentação da API](https://fintrack-production-39f1.up.railway.app/swagger-ui.html)**
 
@@ -188,7 +188,7 @@ npm run preview  # Preview do build de produção
 
 <div align="center">
 
-**[🌐 Ver ao vivo](fintrack-web-rosy.vercel.app)** •
+**[🌐 Ver ao vivo](https://fintrack-web-rosy.vercel.app/)** •
 **[⚙️ Ver o Backend](https://github.com/LucasViana130/Fintrack)**
 
 </div>
