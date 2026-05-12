@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, CreditCard, Tags, ArrowLeftRight,
-  BarChart3, Settings, LogOut, TrendingUp
+  BarChart3, Settings, LogOut, TrendingUp, X 
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
@@ -14,7 +14,7 @@ const navItems = [
   { to: '/reports',      icon: BarChart3,       label: 'Relatórios' },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -29,15 +29,17 @@ export default function Sidebar() {
     : 'FT'
 
   return (
-    <aside className="w-60 shrink-0 flex flex-col h-screen sticky top-0 border-r border-white/5 bg-surface-50/50 backdrop-blur-sm">
-      {/* Logo */}
-      <div className="px-6 py-5 border-b border-white/5">
+    <aside className="flex flex-col h-screen">
+      <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center shadow-glow">
             <TrendingUp size={16} className="text-white" />
           </div>
           <span className="font-display text-lg font-bold text-white">FinTrack</span>
         </div>
+        <button className="lg:hidden text-slate-400 hover:text-white" onClick={onClose}>
+          <X size={20} />
+        </button>
       </div>
 
       {/* Nav */}
@@ -46,6 +48,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                 isActive
@@ -64,6 +67,7 @@ export default function Sidebar() {
       <div className="px-3 py-4 border-t border-white/5 space-y-1">
         <NavLink
           to="/settings"
+          onClick={onClose}
           className={({ isActive }) =>
             `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
               isActive
@@ -77,7 +81,7 @@ export default function Sidebar() {
         </NavLink>
 
         <button
-          onClick={handleLogout}
+          onClick={() => { handleLogout(); onClose() }}
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium w-full text-left text-slate-400 hover:text-red-400 hover:bg-red-500/5 transition-all duration-150"
         >
           <LogOut size={17} />

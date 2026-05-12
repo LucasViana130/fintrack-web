@@ -74,7 +74,6 @@ export default function TransactionsPage() {
         </button>
       </div>
 
-      {/* Filters */}
       <div className="card p-4 animate-fade-in">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           <div>
@@ -122,61 +121,91 @@ export default function TransactionsPage() {
             action={<button className="btn-primary flex items-center gap-2 text-sm" onClick={() => setShowModal(true)}><Plus size={14}/>Nova transação</button>} />
         ) : (
           <>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/5">
-                  {['Data','Descrição','Conta','Categoria','Tipo','Valor',''].map(h => (
-                    <th key={h} className="text-left text-xs font-medium text-slate-500 px-4 py-3">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {transactions.map(t => (
-                  <tr key={t.id} className="hover:bg-white/2 transition-colors group">
-                    <td className="px-4 py-3 text-sm text-slate-400 font-mono">{formatDate(t.date)}</td>
-                    <td className="px-4 py-3 text-sm text-slate-200 max-w-xs truncate">{t.description || '—'}</td>
-                    <td className="px-4 py-3 text-sm text-slate-400">{t.account?.name}</td>
-                    <td className="px-4 py-3">
-                      <span className="flex items-center gap-1.5 text-sm text-slate-300">
-                        <span className="w-2 h-2 rounded-full flex-shrink-0"
-                          style={{ backgroundColor: t.category?.color || '#64748b' }} />
-                        {t.category?.name}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      {t.type === 'INCOME'
-                        ? <span className="badge-income">Receita</span>
-                        : <span className="badge-expense">Despesa</span>}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={clsx('text-sm font-semibold', t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400')}>
-                        {t.type === 'INCOME' ? '+' : '-'}{formatCurrency(t.amount)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="btn-ghost p-1.5 rounded-lg" onClick={() => { setEditing(t); setShowModal(true) }}>
-                          <Pencil size={14} />
-                        </button>
-                        <button className="btn-ghost p-1.5 rounded-lg hover:text-red-400" onClick={() => setDeleting(t)}>
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    </td>
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full min-w-max">
+                <thead>
+                  <tr className="border-b border-white/5">
+                    {[ 'Data', 'Descrição', 'Conta', 'Categoria', 'Tipo', 'Valor', '' ].map(h => (
+                      <th key={h} className="text-left text-xs font-medium text-slate-500 px-4 py-3">{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {transactions.map(t => (
+                    <tr key={t.id} className="hover:bg-white/2 transition-colors group">
+                      <td className="px-4 py-3 text-sm text-slate-400 font-mono">{formatDate(t.date)}</td>
+                      <td className="px-4 py-3 text-sm text-slate-200 max-w-xs truncate">{t.description || '—'}</td>
+                      <td className="px-4 py-3 text-sm text-slate-400">{t.account?.name}</td>
+                      <td className="px-4 py-3">
+                        <span className="flex items-center gap-1.5 text-sm text-slate-300">
+                          <span className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: t.category?.color || '#64748b' }} />
+                          {t.category?.name}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {t.type === 'INCOME'
+                          ? <span className="badge-income">Receita</span>
+                          : <span className="badge-expense">Despesa</span>}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={clsx('text-sm font-semibold', t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400')}>
+                          {t.type === 'INCOME' ? '+' : '-'}{formatCurrency(t.amount)}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button className="btn-ghost p-1.5 rounded-lg" onClick={() => { setEditing(t); setShowModal(true) }}>
+                            <Pencil size={14} />
+                          </button>
+                          <button className="btn-ghost p-1.5 rounded-lg hover:text-red-400" onClick={() => setDeleting(t)}>
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 py-4 border-t border-white/5">
-                <button className="btn-secondary text-sm px-3 py-1.5" disabled={page === 0} onClick={() => setPage(p => p - 1)}>← Anterior</button>
-                <span className="text-sm text-slate-500">{page + 1} / {totalPages}</span>
-                <button className="btn-secondary text-sm px-3 py-1.5" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>Próximo →</button>
-              </div>
-            )}
+            <div className="sm:hidden space-y-3">
+              {transactions.map(t => (
+                <div key={t.id} className="card p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs text-slate-400 font-mono">{formatDate(t.date)}</p>
+                    <span className={clsx('text-sm font-semibold', t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400')}>
+                      {t.type === 'INCOME' ? '+' : '-'}{formatCurrency(t.amount)}
+                    </span>
+                  </div>
+                  <p className="text-sm font-medium text-slate-200 truncate mb-1">{t.description || '—'}</p>
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: t.category?.color || '#64748b' }} />
+                      {t.category?.name} · {t.account?.name}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <button className="btn-ghost p-1" onClick={() => { setEditing(t); setShowModal(true) }}>
+                        <Pencil size={12} />
+                      </button>
+                      <button className="btn-ghost p-1 hover:text-red-400" onClick={() => setDeleting(t)}>
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 py-4 border-t border-white/5">
+            <button className="btn-secondary text-sm px-3 py-1.5" disabled={page === 0} onClick={() => setPage(p => p - 1)}>← Anterior</button>
+            <span className="text-sm text-slate-500">{page + 1} / {totalPages}</span>
+            <button className="btn-secondary text-sm px-3 py-1.5" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>Próximo →</button>
+          </div>
         )}
       </div>
 

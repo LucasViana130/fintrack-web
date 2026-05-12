@@ -28,7 +28,7 @@ export default function BalanceEvolutionChart({ data = [] }) {
 
   return (
     <ResponsiveContainer width="100%" height={280}>
-      <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+      <AreaChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
         <defs>
           <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%"  stopColor="#10b981" stopOpacity={0.2} />
@@ -44,9 +44,20 @@ export default function BalanceEvolutionChart({ data = [] }) {
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-        <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 12 }} axisLine={false} tickLine={false} />
-        <YAxis tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false}
-          tickFormatter={(v) => `R$${(v/1000).toFixed(0)}k`} />
+        <XAxis
+          dataKey="name"
+          tick={{ fill: '#94a3b8', fontSize: 10 }} 
+          axisLine={false}
+          tickLine={false}
+          interval="preserveStartEnd" 
+          minTickGap={10} 
+        />
+        <YAxis
+          tick={{ fill: '#94a3b8', fontSize: 10 }} 
+          axisLine={false}
+          tickLine={false}
+          tickFormatter={(v) => `R$${(v/1000).toFixed(0)}k`} 
+        />
         <Tooltip content={<CustomTooltip />} />
         <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
         <Area type="monotone" dataKey="Receitas" stroke="#10b981" strokeWidth={2} fill="url(#colorIncome)" dot={false} />
